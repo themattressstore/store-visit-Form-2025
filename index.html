@@ -185,50 +185,52 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwy5fCM-pDp-7hLxLEEad2riIUi6ZylYAXQVv86XGtI32vg74F3ogufhNfMfQI0f_bssA/exec"; // Replace with your Google Apps Script URL
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwy5fCM-pDp-7hLxLEEad2riIUi6ZylYAXQVv86XGtI32vg74F3ogufhNfMfQI0f_bssA/exec"; // Replace with your Apps Script URL
 
-    // Set min date to today
-    const today = new Date().toISOString().split("T")[0];
-    document.getElementById('visitDate').setAttribute("min", today);
+// Set min date to today
+const today = new Date().toISOString().split("T")[0];
+document.getElementById('visitDate').setAttribute("min", today);
 
-    document.getElementById('visitForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const form = this;
+document.getElementById('visitForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const form = this;
+  const button = form.querySelector('button');
 
-      // Show loading on button
-      const button = form.querySelector('button');
-      button.disabled = true;
-      button.textContent = "Submitting...";
+  // Force immediate UI update
+  setTimeout(() => {
+    button.disabled = true;
+    button.textContent = "Submitting...";
+  }, 0);
 
-      // Format date to DD/MM/YYYY
-      const dateInput = document.getElementById('visitDate').value;
-      const dateParts = dateInput.split("-");
-      const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+  // Format date to DD/MM/YYYY
+  const dateInput = document.getElementById('visitDate').value;
+  const dateParts = dateInput.split("-");
+  const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
 
-      const formData = new FormData(form);
-      formData.set("visitDate", formattedDate);
+  const formData = new FormData(form);
+  formData.set("visitDate", formattedDate);
 
-      // Submit form
-      fetch(WEB_APP_URL, {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.json())
-      .then(response => {
-        if(response.status === "success"){
-          form.reset();
-          document.getElementById('successMessage').style.display = "block";
-        } else {
-          alert("Error: " + response.message);
-        }
-      })
-      .catch(err => alert("Error: " + err))
-      .finally(() => {
-        button.disabled = false;
-        button.textContent = "Submit";
-      });
-    });
-  </script>
+  // Submit form with no-cors
+  fetch(WEB_APP_URL, {
+    method: "POST",
+    mode: 'no-cors', // prevents CORS errors on GitHub Pages
+    body: formData
+  })
+  .then(() => {
+    form.reset();
+    document.getElementById('successMessage').style.display = "block";
+  })
+  .catch(err => {
+    alert("Something went wrong. Your submission may not have been saved.");
+    console.error(err);
+  })
+  .finally(() => {
+    button.disabled = false;
+    button.textContent = "Submit";
+  });
+});
+</script>
+
 
 </body>
 </html>
