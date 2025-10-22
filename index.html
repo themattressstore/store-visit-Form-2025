@@ -57,15 +57,6 @@
       flex: 1;
     }
 
-    /* Adjust date and time widths to prevent overlap */
-    .datetime-item:first-child input {
-      width: Beckford180x200Front%;
-    }
-
-    .datetime-item:last-child select {
-      width: Beckford180x200Front%;
-    }
-
     .friendly-message {
       text-align: center;
       color: #00008B;
@@ -182,9 +173,7 @@
       </select>
 
       <p class="friendly-message">
-     
-     Your comfort journey starts the moment you walk in!
-     
+        Your comfort journey starts the moment you walk in!
       </p>
 
       <button type="submit">Submit</button>
@@ -196,7 +185,7 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwy5fCM-pDp-7hLxLEEad2riIUi6ZylYAXQVv86XGtI32vg74F3ogufhNfMfQI0f_bssA/exec"; // Replace with your Google Apps Script Web App URL
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwy5fCM-pDp-7hLxLEEad2riIUi6ZylYAXQVv86XGtI32vg74F3ogufhNfMfQI0f_bssA/exec"; // Replace with your Google Apps Script URL
 
     // Set min date to today
     const today = new Date().toISOString().split("T")[0];
@@ -206,12 +195,16 @@
       e.preventDefault();
       const form = this;
 
+      // Show loading on button
+      const button = form.querySelector('button');
+      button.disabled = true;
+      button.textContent = "Submitting...";
+
       // Format date to DD/MM/YYYY
-      const dateInput = document.getElementById('visitDate').value; // "YYYY-MM-DD"
+      const dateInput = document.getElementById('visitDate').value;
       const dateParts = dateInput.split("-");
       const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
 
-      // Prepare FormData
       const formData = new FormData(form);
       formData.set("visitDate", formattedDate);
 
@@ -229,7 +222,11 @@
           alert("Error: " + response.message);
         }
       })
-      .catch(err => alert("Error: " + err));
+      .catch(err => alert("Error: " + err))
+      .finally(() => {
+        button.disabled = false;
+        button.textContent = "Submit";
+      });
     });
   </script>
 
