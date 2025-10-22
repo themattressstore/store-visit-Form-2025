@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Schedule Store Visit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://themattressstore.com/cdn/shop/files/gempages_502340701665625056-c4c51234-f4db-4fe7-97ff-57236aeb16f3.png?v=4732064583246565006') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00008B;
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .datetime-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .datetime-item {
+      flex: 1;
+    }
+
+    /* Adjust date and time widths to prevent overlap */
+    .datetime-item:first-child input {
+      width: Beckford180x200Front%;
+    }
+
+    .datetime-item:last-child select {
+      width: Beckford180x200Front%;
+    }
+
+    .friendly-message {
+      text-align: center;
+      color: #00008B;
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    button {
+      width: 100%;
+      background-color: #00008B;
+      color: #fff;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #000066;
+    }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      margin-top: 15px;
+      display: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Schedule a Store Visit</h2>
+
+    <form id="visitForm">
+      <label>Name:</label>
+      <input type="text" name="name" placeholder="Your Name" required>
+
+      <div class="datetime-container">
+        <div class="datetime-item">
+          <label>Date:</label>
+          <input type="date" name="visitDate" id="visitDate" required>
+        </div>
+
+        <div class="datetime-item">
+          <label>Time:</label>
+          <select name="visitTime" required>
+            <option value="" disabled selected>Select a time</option>
+            <option value="06:00 AM">06:00 AM</option>
+            <option value="06:30 AM">06:30 AM</option>
+            <option value="07:00 AM">07:00 AM</option>
+            <option value="07:30 AM">07:30 AM</option>
+            <option value="08:00 AM">08:00 AM</option>
+            <option value="08:30 AM">08:30 AM</option>
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="09:30 AM">09:30 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="11:30 AM">11:30 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="12:30 PM">12:30 PM</option>
+            <option value="01:00 PM">01:00 PM</option>
+            <option value="01:30 PM">01:30 PM</option>
+            <option value="02:00 PM">02:00 PM</option>
+            <option value="02:30 PM">02:30 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+            <option value="03:30 PM">03:30 PM</option>
+            <option value="04:00 PM">04:00 PM</option>
+            <option value="04:30 PM">04:30 PM</option>
+            <option value="05:00 PM">05:00 PM</option>
+            <option value="05:30 PM">05:30 PM</option>
+            <option value="06:00 PM">06:00 PM</option>
+            <option value="06:30 PM">06:30 PM</option>
+            <option value="07:00 PM">07:00 PM</option>
+            <option value="07:30 PM">07:30 PM</option>
+            <option value="08:00 PM">08:00 PM</option>
+            <option value="08:30 PM">08:30 PM</option>
+            <option value="09:00 PM">09:00 PM</option>
+            <option value="09:30 PM">09:30 PM</option>
+            <option value="10:00 PM">10:00 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Store Location:</label>
+      <select name="visitLocation" required>
+        <option value="" disabled selected>Select a location</option>
+        <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
+        <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
+        <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
+        <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
+        <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
+        <option value="Hastens - Sheikh Zayed Road">Hastens - Sheikh Zayed Road</option>
+        <option value="Hastens - Yas Mall">Hastens - Yas Mall</option>
+        <option value="The Mattress Store - Mirdif City Center">The Mattress Store - Mirdif City Center</option>
+        <option value="The Mattress Store - Dubai Mall">The Mattress Store - Dubai Mall</option>
+        <option value="The Mattress Store - Zahia City Center">The Mattress Store - Zahia City Center</option>
+        <option value="The Mattress Store - Sheikh Zayed Road">The Mattress Store - Sheikh Zayed Road</option>
+        <option value="The Mattress Store - Dubai Hills Mall">The Mattress Store - Dubai Hills Mall</option>
+        <option value="The Mattress Store - Umm Suqeim">The Mattress Store - Umm Suqeim</option>
+        <option value="The Mattress Store - Yas Mall">The Mattress Store - Yas Mall</option>
+        <option value="The Mattress Store - Galleria Mall">The Mattress Store - Galleria Mall</option>
+        <option value="The Mattress Store - Nakheel Mall">The Mattress Store - Nakheel Mall</option>
+        <option value="The Mattress Store - Ibn Battuta Mall">The Mattress Store - Ibn Battuta Mall</option>
+        <option value="The Mattress Store - Festival City Mall">The Mattress Store - Festival City Mall</option>
+        <option value="The Mattress Store - Al Jimi Mall">The Mattress Store - Al Jimi Mall</option>
+      </select>
+
+      <p class="friendly-message">
+     
+     Your comfort journey starts the moment you walk in!
+     
+      </p>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="success-message" id="successMessage">
+      Thank you! Your store visit has been scheduled.
+    </div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwy5fCM-pDp-7hLxLEEad2riIUi6ZylYAXQVv86XGtI32vg74F3ogufhNfMfQI0f_bssA/exec"; // Replace with your Google Apps Script Web App URL
+
+    // Set min date to today
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById('visitDate').setAttribute("min", today);
+
+    document.getElementById('visitForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const form = this;
+
+      // Format date to DD/MM/YYYY
+      const dateInput = document.getElementById('visitDate').value; // "YYYY-MM-DD"
+      const dateParts = dateInput.split("-");
+      const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+
+      // Prepare FormData
+      const formData = new FormData(form);
+      formData.set("visitDate", formattedDate);
+
+      // Submit form
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(response => {
+        if(response.status === "success"){
+          form.reset();
+          document.getElementById('successMessage').style.display = "block";
+        } else {
+          alert("Error: " + response.message);
+        }
+      })
+      .catch(err => alert("Error: " + err));
+    });
+  </script>
+
+</body>
+</html>
