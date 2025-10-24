@@ -36,7 +36,6 @@
       font-weight: bold;
       display: block;
       margin-bottom: 5px;
-      color: #000; /* Ensures label text is black too */
     }
 
     input, select {
@@ -69,7 +68,7 @@
 
     button {
       width: 100%;
-      background-color: #000000; /* Black button */
+      background-color: #00008B;
       color: #fff;
       padding: 14px;
       border: none;
@@ -81,7 +80,7 @@
     }
 
     button:hover {
-      background-color: #333333;
+      background-color: #000066;
     }
 
     .success-message {
@@ -186,7 +185,6 @@
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz_tBWZiALEsMxF3a5p-LnU09XQ5-_wRn7AJ9lK6q4a0QytFLvWpw_yZYuM1rAqKaaJVA/exec";
 
-    // Set min date to today
     const today = new Date().toISOString().split("T")[0];
     document.getElementById('visitDate').setAttribute("min", today);
 
