@@ -16,7 +16,7 @@
     }
 
     .form-container {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(30, 30, 30, 0.9);
       padding: 40px 30px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
@@ -26,9 +26,9 @@
 
     h2 {
       text-align: center;
-      color: #000000; /* Changed to black */
+      color: #f0f0f0; /* Dark white / light gray */
       font-size: 28px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       font-weight: bold;
     }
 
@@ -36,6 +36,7 @@
       font-weight: bold;
       display: block;
       margin-bottom: 5px;
+      color: #ffffff; /* White text */
     }
 
     input, select {
@@ -46,15 +47,27 @@
       border-radius: 6px;
       font-size: 14px;
       box-sizing: border-box;
+      color: #000000; /* Black text for readability */
+      background-color: #ffffff; /* White background */
+    }
+
+    input::placeholder {
+      color: #7a7a7a; /* Gray placeholder text */
+    }
+
+    select option {
+      color:#000000 ; /* Black text for dropdown options */
     }
 
     .datetime-container {
       display: flex;
       gap: 10px;
+      color: #7a7a7a;
     }
 
     .datetime-item {
       flex: 1;
+      color: #7a7a7a;
     }
 
     .friendly-message {
@@ -68,8 +81,8 @@
 
     button {
       width: 100%;
-      background-color: #00008B;
-      color: #fff;
+      background-color: #ffffff; /* White background */
+      color: #000000; /* Black text */
       padding: 14px;
       border: none;
       border-radius: 6px;
@@ -80,12 +93,12 @@
     }
 
     button:hover {
-      background-color: #000066;
+      background-color: #e6e6e6; /* Slight gray on hover */
     }
 
     .success-message {
       text-align: center;
-      color: green;
+      color: white;
       margin-top: 15px;
       display: none;
       font-weight: bold;
@@ -95,7 +108,7 @@
 <body>
 
   <div class="form-container">
-    <h2>Schedule Showroom Visit</h2>
+    <h2>Schedule Your Showroom Visit</h2>
 
     <form id="visitForm">
       <label>Name:</label>
@@ -156,20 +169,6 @@
         <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
         <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
         <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
-        <option value="Hastens - Sheikh Zayed Road">Hastens - Sheikh Zayed Road</option>
-        <option value="Hastens - Yas Mall">Hastens - Yas Mall</option>
-        <option value="The Mattress Store - Mirdif City Center">The Mattress Store - Mirdif City Center</option>
-        <option value="The Mattress Store - Dubai Mall">The Mattress Store - Dubai Mall</option>
-        <option value="The Mattress Store - Zahia City Center">The Mattress Store - Zahia City Center</option>
-        <option value="The Mattress Store - Sheikh Zayed Road">The Mattress Store - Sheikh Zayed Road</option>
-        <option value="The Mattress Store - Dubai Hills Mall">The Mattress Store - Dubai Hills Mall</option>
-        <option value="The Mattress Store - Umm Suqeim">The Mattress Store - Umm Suqeim</option>
-        <option value="The Mattress Store - Yas Mall">The Mattress Store - Yas Mall</option>
-        <option value="The Mattress Store - Galleria Mall">The Mattress Store - Galleria Mall</option>
-        <option value="The Mattress Store - Nakheel Mall">The Mattress Store - Nakheel Mall</option>
-        <option value="The Mattress Store - Ibn Battuta Mall">The Mattress Store - Ibn Battuta Mall</option>
-        <option value="The Mattress Store - Festival City Mall">The Mattress Store - Festival City Mall</option>
-        <option value="The Mattress Store - Al Jimi Mall">The Mattress Store - Al Jimi Mall</option>
       </select>
 
       <p class="friendly-message"></p>
