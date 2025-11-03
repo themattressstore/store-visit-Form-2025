@@ -101,66 +101,69 @@
     <h2>Schedule Your Showroom Visit</h2>
 
     <form id="visitForm">
-      <label>Name:</label>
-      <input type="text" name="name" placeholder="Your Name" required>
+  <label>Name:</label>
+  <input type="text" name="name" placeholder="Your Name" required>
 
-      <div class="datetime-container">
-        <div class="datetime-item">
-          <label>Date:</label>
-          <input type="date" name="visitDate" id="visitDate" required>
-        </div>
+  <div class="datetime-container">
+    <div class="datetime-item">
+      <label>Date:</label>
+      <input type="date" name="visitDate" id="visitDate" required>
+    </div>
 
-        <div class="datetime-item">
-          <label>Time:</label>
-          <select name="visitTime" required>
-            <option value="" disabled selected>Select a time</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="10:30 AM">10:30 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="11:30 AM">11:30 AM</option>
-            <option value="12:00 PM">12:00 PM</option>
-            <option value="12:30 PM">12:30 PM</option>
-            <option value="01:00 PM">01:00 PM</option>
-            <option value="01:30 PM">01:30 PM</option>
-            <option value="02:00 PM">02:00 PM</option>
-            <option value="02:30 PM">02:30 PM</option>
-            <option value="03:00 PM">03:00 PM</option>
-            <option value="03:30 PM">03:30 PM</option>
-            <option value="04:00 PM">04:00 PM</option>
-            <option value="04:30 PM">04:30 PM</option>
-            <option value="05:00 PM">05:00 PM</option>
-            <option value="05:30 PM">05:30 PM</option>
-            <option value="06:00 PM">06:00 PM</option>
-            <option value="06:30 PM">06:30 PM</option>
-            <option value="07:00 PM">07:00 PM</option>
-            <option value="07:30 PM">07:30 PM</option>
-            <option value="08:00 PM">08:00 PM</option>
-            <option value="08:30 PM">08:30 PM</option>
-            <option value="09:00 PM">09:00 PM</option>
-            <option value="09:30 PM">09:30 PM</option>
-            <option value="10:00 PM">10:00 PM</option>
-          </select>
-        </div>
-      </div>
-
-
-      <label>Company Name:</label>
-     <input type="text" name="companyName" placeholder="Your Company Name" required>
-
-      <label>Showroom Location:</label>
-      <select name="visitLocation" required>
-        <option value="" disabled selected>Select a location</option>
-        <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
-        <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
-        <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
-        <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
-        <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
+    <div class="datetime-item">
+      <label>Time:</label>
+      <select name="visitTime" required>
+        <option value="" disabled selected>Select a time</option>
+        <option value="10:00 AM">10:00 AM</option>
+        <option value="10:30 AM">10:30 AM</option>
+        <option value="11:00 AM">11:00 AM</option>
+        <option value="11:30 AM">11:30 AM</option>
+        <option value="12:00 PM">12:00 PM</option>
+        <option value="12:30 PM">12:30 PM</option>
+        <option value="01:00 PM">01:00 PM</option>
+        <option value="01:30 PM">01:30 PM</option>
+        <option value="02:00 PM">02:00 PM</option>
+        <option value="02:30 PM">02:30 PM</option>
+        <option value="03:00 PM">03:00 PM</option>
+        <option value="03:30 PM">03:30 PM</option>
+        <option value="04:00 PM">04:00 PM</option>
+        <option value="04:30 PM">04:30 PM</option>
+        <option value="05:00 PM">05:00 PM</option>
+        <option value="05:30 PM">05:30 PM</option>
+        <option value="06:00 PM">06:00 PM</option>
+        <option value="06:30 PM">06:30 PM</option>
+        <option value="07:00 PM">07:00 PM</option>
+        <option value="07:30 PM">07:30 PM</option>
+        <option value="08:00 PM">08:00 PM</option>
+        <option value="08:30 PM">08:30 PM</option>
+        <option value="09:00 PM">09:00 PM</option>
+        <option value="09:30 PM">09:30 PM</option>
+        <option value="10:00 PM">10:00 PM</option>
       </select>
+    </div>
+  </div>
 
-      <input type="hidden" name="email" id="emailField">
+  <!-- ✅ Company Name Field -->
+  <label>Company Name:</label>
+  <input type="text" name="companyName" placeholder="Your Company Name" required>
 
-      <button type="submit">Submit</button>
-    </form>
+  <!-- Showroom Location -->
+  <label>Showroom Location:</label>
+  <select name="visitLocation" required>
+    <option value="" disabled selected>Select a location</option>
+    <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
+    <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
+    <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
+    <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
+    <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
+  </select>
+
+  <!-- Hidden email field -->
+  <input type="hidden" name="email" id="emailField">
+
+  <button type="submit">Submit</button>
+</form>
+
 
     <div class="success-message" id="successMessage">
       Thank you! Your Showroom visit has been scheduled.
