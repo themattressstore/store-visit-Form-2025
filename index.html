@@ -2,24 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Schedule Showroom Visit</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: url('https://i.postimg.cc/nz6ZNGBP/rolfbenz-mailand2025-04-022.jpg') no-repeat center center fixed;
       background-size: cover;
+      margin: 0;
       display: flex;
-      justify-content: margin-bottom;
+      justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
-
-  display: flex;
-  justify-content: center; /* horizontal */
-  align-items: center;     /* vertical */
-  height: 100vh;
-
-
     }
 
     .form-container {
@@ -29,23 +23,21 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       width: 100%;
       max-width: 450px;
-      
     }
 
     h2 {
       text-align: center;
-      color: #f0f0f0; /* Dark white / light gray */
+      color: #f0f0f0;
       font-size: 28px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       font-weight: bold;
-       margin-Top: 5px;
     }
 
     label {
       font-weight: bold;
       display: block;
       margin-bottom: 5px;
-      color: #ffffff; /* White text */
+      color: #ffffff;
     }
 
     input, select {
@@ -56,42 +48,31 @@
       border-radius: 6px;
       font-size: 14px;
       box-sizing: border-box;
-      color: #000000; /* Black text for readability */
-      background-color:(255,255,255,0.9); /* White background */
+      color: #000000;
+      background-color: rgba(255,255,255,0.9);
     }
 
     input::placeholder {
-      color: #7a7a7a; /* Gray placeholder text */
+      color: #7a7a7a;
     }
 
     select option {
-      color:#000000 ; /* Black text for dropdown options */
+      color:#000000;
     }
 
     .datetime-container {
       display: flex;
       gap: 10px;
-      color: #7a7a7a;
     }
 
     .datetime-item {
       flex: 1;
-      color: #7a7a7a;
-    }
-
-    .friendly-message {
-      text-align: center;
-      color: #00008B;
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      font-style: italic;
     }
 
     button {
       width: 100%;
-      background-color: #ffffff; /* White background */
-      color: #000000; /* Black text */
+      background-color: #ffffff;
+      color: #000000;
       padding: 14px;
       border: none;
       border-radius: 6px;
@@ -102,7 +83,7 @@
     }
 
     button:hover {
-      background-color: #e6e6e6; /* Slight gray on hover */
+      background-color: #e6e6e6;
     }
 
     .success-message {
@@ -114,8 +95,8 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="form-container">
     <h2>Schedule Your Showroom Visit</h2>
 
@@ -133,14 +114,6 @@
           <label>Time:</label>
           <select name="visitTime" required>
             <option value="" disabled selected>Select a time</option>
-            <option value="06:00 AM">06:00 AM</option>
-            <option value="06:30 AM">06:30 AM</option>
-            <option value="07:00 AM">07:00 AM</option>
-            <option value="07:30 AM">07:30 AM</option>
-            <option value="08:00 AM">08:00 AM</option>
-            <option value="08:30 AM">08:30 AM</option>
-            <option value="09:00 AM">09:00 AM</option>
-            <option value="09:30 AM">09:30 AM</option>
             <option value="10:00 AM">10:00 AM</option>
             <option value="10:30 AM">10:30 AM</option>
             <option value="11:00 AM">11:00 AM</option>
@@ -180,7 +153,8 @@
         <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
       </select>
 
-      <p class="friendly-message"></p>
+      <!-- Hidden email field -->
+      <input type="hidden" name="email" id="emailField">
 
       <button type="submit">Submit</button>
     </form>
@@ -191,21 +165,28 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz_tBWZiALEsMxF3a5p-LnU09XQ5-_wRn7AJ9lK6q4a0QytFLvWpw_yZYuM1rAqKaaJVA/exec";
+    const WEB_APP_URL = "YOUR_WEB_APP_URL_HERE"; // replace with your Apps Script URL
 
+    // Set minimum date as today
     const today = new Date().toISOString().split("T")[0];
     document.getElementById('visitDate').setAttribute("min", today);
+
+    // Capture email from URL
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+    if(email){
+      document.getElementById("emailField").value = email;
+    }
 
     document.getElementById('visitForm').addEventListener('submit', function(e){
       e.preventDefault();
       const form = this;
       const button = form.querySelector('button');
 
-      setTimeout(() => {
-        button.disabled = true;
-        button.textContent = "Submitting...";
-      }, 0);
+      button.disabled = true;
+      button.textContent = "Submitting...";
 
+      // Format date as DD/MM/YYYY
       const dateInput = document.getElementById('visitDate').value;
       const dateParts = dateInput.split("-");
       const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
@@ -232,6 +213,5 @@
       });
     });
   </script>
-
 </body>
 </html>
