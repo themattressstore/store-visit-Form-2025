@@ -58,25 +58,32 @@
     <div class="datetime-item">
       <label>Time:</label>
       <select name="visitTime" required>
-        <!-- options -->
+        <option value="" disabled selected>Select a time</option>
+        <option value="10:00 AM">10:00 AM</option>
+        <option value="10:30 AM">10:30 AM</option>
+        <!-- all other options -->
       </select>
     </div>
   </div>
 
-  <!-- Add Company Name HERE -->
   <label>Company Name:</label>
   <input type="text" name="companyName" placeholder="Your Company Name" required>
 
   <label>Showroom Location:</label>
   <select name="visitLocation" required>
-    <!-- options -->
+    <option value="" disabled selected>Select a location</option>
+    <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
+    <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
+    <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
+    <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
+    <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
   </select>
 
-  <!-- Hidden email -->
   <input type="hidden" name="email" id="emailField">
 
   <button type="submit">Submit</button>
 </form>
+
 
 
     <div class="success-message" id="successMessage">
@@ -95,27 +102,39 @@
     const email = params.get("email");
     if(email) document.getElementById("emailField").value = email;
 
-    document.getElementById('visitForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const form = this;
-      const button = form.querySelector('button');
-      button.disabled = true;
-      button.textContent = "Submitting...";
+    document.getElementById('visitForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  const button = form.querySelector('button');
 
-      // Format date DD/MM/YYYY
-      const dateInput = document.getElementById('visitDate').value;
-      const [y,m,d] = dateInput.split("-");
-      form.visitDate.value = `${d}/${m}/${y}`;
+  button.disabled = true;
+  button.textContent = "Submitting...";
 
-      const formData = new FormData(form);
-      fetch(WEB_APP_URL, { method: "POST", mode: 'no-cors', body: formData })
-        .then(() => {
-          form.reset();
-          document.getElementById('successMessage').style.display = "block";
-        })
-        .catch(err => { alert("Something went wrong."); console.error(err); })
-        .finally(() => { button.disabled = false; button.textContent = "Submit"; });
-    });
+  const dateInput = document.getElementById('visitDate').value;
+  const dateParts = dateInput.split("-");
+  const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+
+  const formData = new FormData(form);
+  formData.set("visitDate", formattedDate); // Keep date format as DD/MM/YYYY
+
+  fetch("https://script.google.com/macros/s/AKfycbyFSQmOdUARcsX0asuXFFvex3QamTQc-8XluqWc6ZxfOieMcJ18hfgQffTEugbZgGAzEA/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(() => {
+    form.reset();
+    document.getElementById('successMessage').style.display = "block";
+  })
+  .catch(err => {
+    alert("Submission failed.");
+    console.error(err);
+  })
+  .finally(() => {
+    button.disabled = false;
+    button.textContent = "Submit";
+  });
+});
+
   </script>
 </body>
 </html>
