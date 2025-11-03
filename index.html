@@ -143,11 +143,9 @@
         </div>
       </div>
 
-      <!-- Company Name Field -->
       <label>Company Name:</label>
       <input type="text" name="companyName" placeholder="Your Company Name" required>
 
-      <!-- Showroom Location -->
       <label>Showroom Location:</label>
       <select name="visitLocation" required>
         <option value="" disabled selected>Select a location</option>
@@ -158,7 +156,6 @@
         <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
       </select>
 
-      <!-- Hidden email field -->
       <input type="hidden" name="email" id="emailField">
 
       <button type="submit">Submit</button>
@@ -170,7 +167,7 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyFSQmOdUARcsX0asuXFFvex3QamTQc-8XluqWc6ZxfOieMcJ18hfgQffTEugbZgGAzEA/exec"; // replace with your Apps Script URL
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyFSQmOdUARcsX0asuXFFvex3QamTQc-8XluqWc6ZxfOieMcJ18hfgQffTEugbZgGAzEA/exec";
 
     // Set minimum date as today
     const today = new Date().toISOString().split("T")[0];
@@ -191,7 +188,6 @@
       button.disabled = true;
       button.textContent = "Submitting...";
 
-      // Format date as DD/MM/YYYY
       const dateInput = document.getElementById('visitDate').value;
       const dateParts = dateInput.split("-");
       const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
