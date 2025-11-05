@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Schedule Showroom Visit</title>
   <style>
@@ -23,41 +23,72 @@
       width: 100%;
       max-width: 450px;
     }
-    h2 { text-align: center; color: #f0f0f0; font-size: 28px; margin-bottom: 20px; font-weight: bold; }
-    label { font-weight: bold; display: block; margin-bottom: 5px; color: #ffffff; }
+    h2 {
+      text-align: center;
+      color: #f0f0f0;
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
     input, select {
-      width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; box-sizing: border-box; color: #000; background-color: rgba(255,255,255,0.9);
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      color: #000;
+      background-color: rgba(255,255,255,0.9);
     }
     input::placeholder { color: #7a7a7a; }
-    select option { color:#000; }
+    select option { color: #000; }
     .datetime-container { display: flex; gap: 10px; }
     .datetime-item { flex: 1; }
     button {
-      width: 100%; background-color: #ffffff; color: #000; padding: 14px;
-      border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #000;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
       transition: background 0.3s ease;
     }
     button:hover { background-color: #e6e6e6; }
-    .success-message { text-align: center; color: white; margin-top: 15px; display: none; font-weight: bold; }
+    .success-message, .error-message {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+      display: none;
+    }
+    .success-message { color: #ffffff; }
+    .error-message { color: #ffcccc; }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h2>Schedule Your Showroom Visit</h2>
-
     <form id="visitForm">
-      <label>Name:</label>
-      <input type="text" name="name" placeholder="Your Name" required>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
 
       <div class="datetime-container">
         <div class="datetime-item">
-          <label>Date:</label>
-          <input type="date" name="visitDate" id="visitDate" required>
+          <label for="visitDate">Date:</label>
+          <input type="date" id="visitDate" name="visitDate" required>
         </div>
         <div class="datetime-item">
-          <label>Time:</label>
-          <select name="visitTime" required>
+          <label for="visitTime">Time:</label>
+          <select id="visitTime" name="visitTime" required>
             <option value="" disabled selected>Select a time</option>
             <option value="10:00 AM">10:00 AM</option>
             <option value="10:30 AM">10:30 AM</option>
@@ -80,11 +111,11 @@
         </div>
       </div>
 
-      <label>Company Name:</label>
-      <input type="text" name="companyName" placeholder="Your Company Name" required>
+      <label for="companyName">Company Name:</label>
+      <input type="text" id="companyName" name="companyName" placeholder="Your Company Name" required>
 
-      <label>Showroom Location:</label>
-      <select name="visitLocation" required>
+      <label for="visitLocation">Showroom Location:</label>
+      <select id="visitLocation" name="visitLocation" required>
         <option value="" disabled selected>Select a location</option>
         <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
         <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
@@ -101,53 +132,56 @@
     <div class="success-message" id="successMessage">
       Thank you! Your Showroom visit has been scheduled.
     </div>
+    <div class="error-message" id="errorMessage">
+      Submission failed. Please try again.
+    </div>
   </div>
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyFSQmOdUARcsX0asuXFFvex3QamTQc-8XluqWc6ZxfOieMcJ18hfgQffTEugbZgGAzEA/exec";
 
-    // Set minimum date as today
     document.getElementById('visitDate').setAttribute("min", new Date().toISOString().split("T")[0]);
 
-    // Capture email from URL
     const params = new URLSearchParams(window.location.search);
     const email = params.get("email");
-    if (email) document.getElementById("emailField").value = email;
+    if (email && email.includes("@")) {
+      document.getElementById("emailField").value = email;
+    } else {
+      document.getElementById("emailField").value = "Not Provided";
+    }
 
-    // Handle form submission
     const form = document.getElementById('visitForm');
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       const button = form.querySelector('button');
       button.disabled = true;
       button.textContent = "Submitting...";
+      document.getElementById('successMessage').style.display = "none";
+      document.getElementById('errorMessage').style.display = "none";
 
-      // Format date as DD/MM/YYYY
       const dateInput = document.getElementById('visitDate').value;
       const dateParts = dateInput.split("-");
-      const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+      const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
 
-      // Build URL-encoded data (works best with Apps Script)
       const formData = new URLSearchParams();
-      formData.append("name", form.name.value);
-      formData.append("companyName", form.companyName.value);
+      formData.append("name", form.name.value.trim());
+      formData.append("companyName", form.companyName.value.trim());
       formData.append("visitDate", formattedDate);
       formData.append("visitTime", form.visitTime.value);
       formData.append("visitLocation", form.visitLocation.value);
-      formData.append("email", form.email.value);
+      formData.append("email", form.email.value.trim());
 
-      // Send data to Apps Script
       fetch(WEB_APP_URL, {
         method: "POST",
         body: formData,
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       })
       .then(() => {
-        form.reset();
         document.getElementById('successMessage').style.display = "block";
+        setTimeout(() => form.reset(), 1000);
       })
       .catch(err => {
-        alert("Submission failed.");
+        document.getElementById('errorMessage').style.display = "block";
         console.error(err);
       })
       .finally(() => {
