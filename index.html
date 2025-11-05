@@ -47,44 +47,56 @@
     <h2>Schedule Your Showroom Visit</h2>
 
     <form id="visitForm">
-  <label>Name:</label>
-  <input type="text" name="name" placeholder="Your Name" required>
+      <label>Name:</label>
+      <input type="text" name="name" placeholder="Your Name" required>
 
-  <div class="datetime-container">
-    <div class="datetime-item">
-      <label>Date:</label>
-      <input type="date" name="visitDate" id="visitDate" required>
-    </div>
-    <div class="datetime-item">
-      <label>Time:</label>
-      <select name="visitTime" required>
-        <option value="" disabled selected>Select a time</option>
-        <option value="10:00 AM">10:00 AM</option>
-        <option value="10:30 AM">10:30 AM</option>
-        <!-- all other options -->
+      <div class="datetime-container">
+        <div class="datetime-item">
+          <label>Date:</label>
+          <input type="date" name="visitDate" id="visitDate" required>
+        </div>
+        <div class="datetime-item">
+          <label>Time:</label>
+          <select name="visitTime" required>
+            <option value="" disabled selected>Select a time</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="11:30 AM">11:30 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="12:30 PM">12:30 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="1:30 PM">1:30 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="2:30 PM">2:30 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="3:30 PM">3:30 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="4:30 PM">4:30 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+            <option value="5:30 PM">5:30 PM</option>
+            <option value="6:00 PM">6:00 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Company Name:</label>
+      <input type="text" name="companyName" placeholder="Your Company Name" required>
+
+      <label>Showroom Location:</label>
+      <select name="visitLocation" required>
+        <option value="" disabled selected>Select a location</option>
+        <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
+        <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
+        <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
+        <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
+        <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
       </select>
-    </div>
-  </div>
 
-  <label>Company Name:</label>
-  <input type="text" name="companyName" placeholder="Your Company Name" required>
+      <input type="hidden" name="email" id="emailField">
 
-  <label>Showroom Location:</label>
-  <select name="visitLocation" required>
-    <option value="" disabled selected>Select a location</option>
-    <option value="Armani Casa - Dubai Mall">Armani Casa - Dubai Mall</option>
-    <option value="Bentley Home - Dubai Mall">Bentley Home - Dubai Mall</option>
-    <option value="Bugatti Home - Dubai Mall">Bugatti Home - Dubai Mall</option>
-    <option value="Rolf Benz - Dubai Mall">Rolf Benz - Dubai Mall</option>
-    <option value="Chateau D'Ax - Dubai Hills Mall">Chateau D'Ax - Dubai Hills Mall</option>
-  </select>
-
-  <input type="hidden" name="email" id="emailField">
-
-  <button type="submit">Submit</button>
-</form>
-
-
+      <button type="submit">Submit</button>
+    </form>
 
     <div class="success-message" id="successMessage">
       Thank you! Your Showroom visit has been scheduled.
@@ -100,41 +112,49 @@
     // Capture email from URL
     const params = new URLSearchParams(window.location.search);
     const email = params.get("email");
-    if(email) document.getElementById("emailField").value = email;
+    if (email) document.getElementById("emailField").value = email;
 
-    document.getElementById('visitForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const form = this;
-  const button = form.querySelector('button');
+    // Handle form submission
+    const form = document.getElementById('visitForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const button = form.querySelector('button');
+      button.disabled = true;
+      button.textContent = "Submitting...";
 
-  button.disabled = true;
-  button.textContent = "Submitting...";
+      // Format date as DD/MM/YYYY
+      const dateInput = document.getElementById('visitDate').value;
+      const dateParts = dateInput.split("-");
+      const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
 
-  const dateInput = document.getElementById('visitDate').value;
-  const dateParts = dateInput.split("-");
-  const formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+      // Build URL-encoded data (works best with Apps Script)
+      const formData = new URLSearchParams();
+      formData.append("name", form.name.value);
+      formData.append("companyName", form.companyName.value);
+      formData.append("visitDate", formattedDate);
+      formData.append("visitTime", form.visitTime.value);
+      formData.append("visitLocation", form.visitLocation.value);
+      formData.append("email", form.email.value);
 
-  const formData = new FormData(form);
-  formData.set("visitDate", formattedDate); // Keep date format as DD/MM/YYYY
-
-  fetch("https://script.google.com/macros/s/AKfycbyFSQmOdUARcsX0asuXFFvex3QamTQc-8XluqWc6ZxfOieMcJ18hfgQffTEugbZgGAzEA/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
-    form.reset();
-    document.getElementById('successMessage').style.display = "block";
-  })
-  .catch(err => {
-    alert("Submission failed.");
-    console.error(err);
-  })
-  .finally(() => {
-    button.disabled = false;
-    button.textContent = "Submit";
-  });
-});
-
+      // Send data to Apps Script
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: formData,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      })
+      .then(() => {
+        form.reset();
+        document.getElementById('successMessage').style.display = "block";
+      })
+      .catch(err => {
+        alert("Submission failed.");
+        console.error(err);
+      })
+      .finally(() => {
+        button.disabled = false;
+        button.textContent = "Submit";
+      });
+    });
   </script>
 </body>
 </html>
