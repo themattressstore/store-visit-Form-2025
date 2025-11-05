@@ -119,7 +119,6 @@
         </div>
       </div>
 
-      <!-- New: Company Name before showroom location -->
       <label for="companyName">Company Name:</label>
       <input type="text" id="companyName" name="companyName" placeholder="Company Name" required>
 
@@ -147,51 +146,53 @@
   </div>
 
   <script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby8cIpmxEwS_57hoyBT445HcPxd5YFIbnprMP-72ZgcdmgUhI64VawZD3oMH2CtAWdCfg/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby8cIpmxEwS_57hoyBT445HcPxd5YFIbnprMP-72ZgcdmgUhI64VawZD3oMH2CtAWdCfg/exec";
 
-  // Ensure date cannot be in the past
-  document.getElementById('visitDate').setAttribute("min", new Date().toISOString().split("T")[0]);
+    document.getElementById('visitDate').setAttribute("min", new Date().toISOString().split("T")[0]);
 
-  // Optional: capture email from query string if present
-  const params = new URLSearchParams(window.location.search);
-  const email = params.get("email");
-  document.getElementById("emailField").value = email && email.includes("@") ? email : "Not Provided";
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+    document.getElementById("emailField").value = email && email.includes("@") ? email : "Not Provided";
 
-  const form = document.getElementById('visitForm');
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const button = form.querySelector('button');
-    button.disabled = true;
-    button.textContent = "Submitting...";
-    
-    // Format date as dd/mm/yyyy
-    const dateInput = document.getElementById('visitDate').value;
-    const dateParts = dateInput.split("-");
-    const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    const form = document.getElementById('visitForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const button = form.querySelector('button');
+      button.disabled = true;
+      button.textContent = "Submitting...";
+      document.getElementById('successMessage').style.display = "none";
+      document.getElementById('errorMessage').style.display = "none";
 
-    // Build form data
-    const formData = new URLSearchParams();
-    formData.append("name", form.name.value.trim());
-    formData.append("companyName", form.companyName.value.trim());
-    formData.append("visitDate", formattedDate);
-    formData.append("visitTime", form.visitTime.value);
-    formData.append("visitLocation", form.visitLocation.value);
-    formData.append("email", form.email.value.trim());
+      const dateInput = document.getElementById('visitDate').value;
+      const dateParts = dateInput.split("-");
+      const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
 
-    // Send form data without worrying about reading the response
-    fetch(WEB_APP_URL, {
-      method: "POST",
-      body: formData
-    })
-    .finally(() => {
-      // Always show success message
-      document.getElementById('successMessage').style.display = "block";
-      setTimeout(() => form.reset(), 1000);
-      button.disabled = false;
-      button.textContent = "Submit";
+      const formData = new URLSearchParams();
+      formData.append("name", form.name.value.trim());
+      formData.append("companyName", form.companyName.value.trim());
+      formData.append("visitDate", formattedDate);
+      formData.append("visitTime", form.visitTime.value);
+      formData.append("visitLocation", form.visitLocation.value);
+      formData.append("email", form.email.value.trim());
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: formData,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      })
+      .then(() => {
+        document.getElementById('successMessage').style.display = "block";
+        setTimeout(() => form.reset(), 1000);
+      })
+      .catch(err => {
+        document.getElementById('errorMessage').style.display = "block";
+        console.error(err);
+      })
+      .finally(() => {
+        button.disabled = false;
+        button.textContent = "Submit";
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
