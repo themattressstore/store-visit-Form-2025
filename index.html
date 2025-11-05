@@ -111,9 +111,6 @@
         </div>
       </div>
 
-      <label for="company">Company Name:</label>
-      <input type="text" id="company" name="company" placeholder="Your Company Name" required>
-
       <label for="visitLocation">Showroom Location:</label>
       <select id="visitLocation" name="visitLocation" required>
         <option value="" disabled selected>Select a location</option>
@@ -161,7 +158,6 @@
 
       const formData = new URLSearchParams();
       formData.append("name", form.name.value.trim());
-      formData.append("company", form.company.value.trim()); // ✅ updated field name
       formData.append("visitDate", formattedDate);
       formData.append("visitTime", form.visitTime.value);
       formData.append("visitLocation", form.visitLocation.value);
