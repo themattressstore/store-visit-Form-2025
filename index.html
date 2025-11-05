@@ -107,18 +107,21 @@
             <option value="5:00 PM">5:00 PM</option>
             <option value="5:30 PM">5:30 PM</option>
             <option value="6:00 PM">6:00 PM</option>
-             <option value="2:00 PM">6:30 PM</option>
-            <option value="2:30 PM">7:00 PM</option>
-            <option value="3:00 PM">7:30 PM</option>
-            <option value="3:30 PM">8:00 PM</option>
-            <option value="4:00 PM">8:30 PM</option>
-            <option value="4:30 PM">9:00 PM</option>
-            <option value="5:00 PM">9:30 PM</option>
-            <option value="5:30 PM">10:00 PM</option>
-    
+            <option value="6:30 PM">6:30 PM</option>
+            <option value="7:00 PM">7:00 PM</option>
+            <option value="7:30 PM">7:30 PM</option>
+            <option value="8:00 PM">8:00 PM</option>
+            <option value="8:30 PM">8:30 PM</option>
+            <option value="9:00 PM">9:00 PM</option>
+            <option value="9:30 PM">9:30 PM</option>
+            <option value="10:00 PM">10:00 PM</option>
           </select>
         </div>
       </div>
+
+      <!-- New: Company Name before showroom location -->
+      <label for="companyName">Company Name:</label>
+      <input type="text" id="companyName" name="companyName" placeholder="Company Name" required>
 
       <label for="visitLocation">Showroom Location:</label>
       <select id="visitLocation" name="visitLocation" required>
@@ -144,10 +147,13 @@
   </div>
 
   <script>
+    // Update this URL to your deployed Apps Script web app URL
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyFSQmOdUARcsX0asuXFFvex3QamTQc-8XluqWc6ZxfOieMcJ18hfgQffTEugbZgGAzEA/exec";
 
+    // Ensure date cannot be in the past
     document.getElementById('visitDate').setAttribute("min", new Date().toISOString().split("T")[0]);
 
+    // Optional: capture email from query string if present
     const params = new URLSearchParams(window.location.search);
     const email = params.get("email");
     document.getElementById("emailField").value = email && email.includes("@") ? email : "Not Provided";
@@ -161,12 +167,15 @@
       document.getElementById('successMessage').style.display = "none";
       document.getElementById('errorMessage').style.display = "none";
 
+      // Format date as dd/mm/yyyy
       const dateInput = document.getElementById('visitDate').value;
       const dateParts = dateInput.split("-");
       const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
 
+      // Build form data
       const formData = new URLSearchParams();
       formData.append("name", form.name.value.trim());
+      formData.append("companyName", form.companyName.value.trim()); // new
       formData.append("visitDate", formattedDate);
       formData.append("visitTime", form.visitTime.value);
       formData.append("visitLocation", form.visitLocation.value);
