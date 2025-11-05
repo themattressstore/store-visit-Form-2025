@@ -144,11 +144,7 @@
 
     const params = new URLSearchParams(window.location.search);
     const email = params.get("email");
-    if (email && email.includes("@")) {
-      document.getElementById("emailField").value = email;
-    } else {
-      document.getElementById("emailField").value = "Not Provided";
-    }
+    document.getElementById("emailField").value = email && email.includes("@") ? email : "Not Provided";
 
     const form = document.getElementById('visitForm');
     form.addEventListener('submit', function(e) {
